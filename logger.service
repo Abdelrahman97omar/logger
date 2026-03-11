@@ -1,0 +1,12 @@
+[Unit]
+Description=Run logger script
+After=network.target
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=/home/__USER__/.logs
+ExecStart=/home/__USER__/.logs/run-log.sh
+
+[Install]
+WantedBy=multi-user.target
