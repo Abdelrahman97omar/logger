@@ -1,5 +1,5 @@
 # logger
-1. download logger.zip and installScript.sh in home
+1. Send **"logger.zip"** and **"installScript.sh"** to robot's home  
 2. Extract logger.zip
 3. open terminal and run the following two comands: </br>
     a. chmod 777 installScript.sh </br>
