@@ -11,7 +11,7 @@ robotname = os.environ.get('USER')
 robotid = os.environ.get('ROBOT_ID')
 
 #Creat table structure
-pdf.cell(135, 10, txt=f"Robot: {robotname}", ln=False, align="L",)
+pdf.cell(135, 10, txt=f"Robot: {robotname}", ln=False, align="L")
 pdf.cell(50, 10, txt=f"Date: {day}-{month}-{year}", ln=True, align="L")
 pdf.cell(50, 10, txt=f"Robot ID: {robotid}", ln=True, align="L")
 pdf.cell(40, 10, txt="Date",border=1, ln=False, align="C")
@@ -27,7 +27,8 @@ for i in range(0, len(lines), 2):
     start_line = start_line.strip()
     last_line = lines[i+1].strip("Last seen at: ")
     last_line = last_line.strip()
-
+    print(start_line)
+    print(last_line)
     pdf.cell(40, 10, txt=start_line[6:], border=1,ln=False, align="C") #Date
     pdf.cell(70, 10, txt=start_line[0:5], border=1,ln=False, align="C") #start date
     pdf.cell(70, 10, txt=last_line[0:5], border=1,ln=True, align="C") #last seen
