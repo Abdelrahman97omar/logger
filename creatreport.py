@@ -8,7 +8,7 @@ year, month, day,time=loger.get_time()
 pdf.set_font("Arial", size=12,style='B') # B -> bold
 
 robotname = os.environ.get('USER') 
-robotid = os.environ.get('ROBOT_ID')
+robotid = os.environ.get('ROBOT_ID','Unknown')
 
 #Creat table structure
 pdf.cell(135, 10, txt=f"Robot: {robotname}", ln=False, align="L")
@@ -23,10 +23,8 @@ with open('logs.txt','r',encoding='utf-8') as f:
 
 pdf.set_font("Arial", size=12,style='')
 for i in range(0, len(lines), 2):
-    start_line = lines[i].strip("This Pc started at: ")
-    start_line = start_line.strip()
-    last_line = lines[i+1].strip("Last seen at: ")
-    last_line = last_line.strip()
+    start_line = lines[i].replace("This Pc started at: ", "").strip()
+    last_line = lines[i+1].replace("Last seen at: ", "").strip()
     print(start_line)
     print(last_line)
     pdf.cell(40, 10, txt=start_line[6:], border=1,ln=False, align="C") #Date
@@ -34,3 +32,5 @@ for i in range(0, len(lines), 2):
     pdf.cell(70, 10, txt=last_line[0:5], border=1,ln=True, align="C") #last seen
 
 pdf.output("latest-stats.pdf")
+
+
