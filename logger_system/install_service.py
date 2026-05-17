@@ -21,7 +21,7 @@ def install_service():
 
     os.makedirs(f"/home/{user}/.logs", exist_ok=True)
     #Copy files to .logs
-    shutil.copy(f"/home/{user}/logs.txt",f"/home/{user}/.logs")
+    shutil.copy(f"/home/{user}/logs.txt",f"/home/{user}/.logs/")
     shutil.copy(os.path.join(package_dir, "run-log.sh"),f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "loger.py"), f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "creatreport.py"), f"/home/{user}/.logs")
@@ -29,7 +29,7 @@ def install_service():
 
     #install Service
     subprocess.run(["systemctl", "stop", "logger"])
-    service_src = os.path.join(package_dir, "..", "logger.service")
+    service_src = os.path.join(package_dir, "logger.service")
     file_path ="/etc/systemd/system/logger.service"
     if os.path.exists(file_path):
         try:
