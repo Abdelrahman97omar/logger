@@ -7,9 +7,10 @@ def install_service():
 
     import logger_system
     package_dir = os.path.dirname(logger_system.__file__)
+    user = os.getenv("SUDO_USER") or os.getenv("USER")
+    robot_id = os.environ["ROBOT_ID"]
 
     # Remove old logs file
-    user = os.getenv("SUDO_USER") or os.getenv("USER")
     try:
         print("Copying old logs to safe place")
         shutil.copy(f"/home/{user}/.logs/logs.txt",f"/home/{user}/") #Copy old logs file to home
@@ -30,6 +31,11 @@ def install_service():
     #install Service
     subprocess.run(["systemctl", "stop", "logger"])
     service_src = os.path.join(package_dir, "logger.service")
+    # Add the robot user and id to the service file
+    content = service_src.read_text()
+    content = content.replace("__USER__", user)
+    content = content.replace("__ROBOTID__", robot_id)
+    service_src.write_text(content)
     file_path ="/etc/systemd/system/logger.service"
     if os.path.exists(file_path):
         try:
