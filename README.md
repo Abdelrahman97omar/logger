@@ -1,4 +1,9 @@
-# logger
+# New system:
+Run the following in the same order: 
+    1. pip install --upgrade --force-reinstall --no-cache-dir git+https://github.com/Abdelrahman97omar/logger.git
+    2. logger-install
+
+# Old way to install logger
 1. Send **"logger.zip"** and **"installScript.sh"** to robot's home  
 2. Extract logger.zip
 3. open terminal and run the following two comands: </br>
@@ -6,7 +11,3 @@
     b. ./installScript.sh
 4. go in logger folder, open loger.py and replace the time zone in the following line: tz = pytz.timezone('Africa/Cairo'). You will find all time zone options in the loger.py file
 5. restart the robot and in home, open .logs folder and make sure logs.txt file is present
-
-
-# New system:
-Run: **sudo logger-install**
