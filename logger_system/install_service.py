@@ -9,7 +9,7 @@ def install_service():
     package_dir = os.path.dirname(logger_system.__file__)
 
     # Remove old logs file
-    user = os.getenv("USER")
+    user = os.getenv("SUDO_USER") or os.getenv("USER")
     try:
         print("Copying old logs to safe place")
         shutil.copy(f"/home/{user}/.logs/logs.txt",f"/home/{user}/") #Copy old logs file to home
@@ -25,7 +25,7 @@ def install_service():
     shutil.copy(os.path.join(package_dir, "run-log.sh"),f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "loger.py"), f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "creatreport.py"), f"/home/{user}/.logs")
-    os.chmod(f"/home/{user}/.logs", 0o755)
+    os.chmod(f"/home/{user}/.logs", 0o777)
 
     #install Service
     subprocess.run(["systemctl", "stop", "logger"])
@@ -39,10 +39,12 @@ def install_service():
             print("Permission denied.")
     else:
         print("The file does not exist.")
-    shutil.copy(service_src, "/etc/systemd/system/logger.service")
-    subprocess.run(["systemctl", "daemon-reload"])
-    subprocess.run(["systemctl", "enable", "logger"])
-    subprocess.run(["systemctl", "start", "logger"])
+
+    # shutil.copy(service_src, "/etc/systemd/system/logger.service")
+    subprocess.run(["sudo", "cp", f"{service_src}", "/etc/systemd/system/logger.service"])      
+    subprocess.run(["sudo", "systemctl", "daemon-reload"])         
+    subprocess.run(["sudo", "systemctl", "enable", "logger"])      
+    subprocess.run(["sudo", "systemctl", "start", "logger"])       
 
 if __name__ == "__main__":
     install_service()
