@@ -2,7 +2,7 @@
 from datetime import datetime
 import pytz
 import time as t
-
+import os
 
 tz = pytz.timezone('Africa/Cairo')
 # | Country      | pytz Timezone  |
@@ -10,7 +10,8 @@ tz = pytz.timezone('Africa/Cairo')
 # | Egypt        | `Africa/Cairo` |
 # | Saudi Arabia | `Asia/Riyadh`  |
 # | UAE          | `Asia/Dubai`   |
-file_name='logs.txt'
+
+file_name = os.path.expanduser('~/.logs/logs.txt')
 
 def get_time():
     now = datetime.now(tz)

@@ -6,3 +6,7 @@
     b. ./installScript.sh
 4. go in logger folder, open loger.py and replace the time zone in the following line: tz = pytz.timezone('Africa/Cairo'). You will find all time zone options in the loger.py file
 5. restart the robot and in home, open .logs folder and make sure logs.txt file is present
+
+
+# New system:
+Run: **sudo logger-install**
