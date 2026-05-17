@@ -2,6 +2,7 @@ import shutil
 import subprocess
 import os
 import sys
+from pathlib import Path
 
 def install_service():
 
@@ -30,12 +31,14 @@ def install_service():
 
     #install Service
     subprocess.run(["systemctl", "stop", "logger"])
+    service_file_content = Path(os.path.join(package_dir, "logger.service"))
     service_src = os.path.join(package_dir, "logger.service")
+
     # Add the robot user and id to the service file
-    content = service_src.read_text()
+    content = service_file_content.read_text()
     content = content.replace("__USER__", user)
     content = content.replace("__ROBOTID__", robot_id)
-    service_src.write_text(content)
+    service_file_content.write_text(content)
     file_path ="/etc/systemd/system/logger.service"
     if os.path.exists(file_path):
         try:
