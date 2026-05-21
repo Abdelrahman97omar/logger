@@ -1,8 +1,9 @@
 # New system:
-Run the following in the same order: 
-    1. pip install --upgrade --force-reinstall --no-cache-dir git+https://github.com/Abdelrahman97omar/logger.git
-    2. logger-install
-
+Run the following in the same order:</br> 
+1. pip install --upgrade --force-reinstall --no-cache-dir git+https://github.com/Abdelrahman97omar/logger.git
+2. logger-install
+3. The logger.py, creatreport.py and install_service.py (package installer) will be installed into /home/USER/.local/lib/python3.10/site-packages/logger_system  
+4. The logs file (logs.txt) and the report pdf (latest-stats.pdf) will be in /home/USER/.logs
 # Old way to install logger
 1. Send **"logger.zip"** and **"installScript.sh"** to robot's home  
 2. Extract logger.zip
