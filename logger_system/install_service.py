@@ -23,11 +23,12 @@ def install_service():
         shutil.rmtree(old_logs_dir)  
 
     os.makedirs(f"/home/{user}/.logs", exist_ok=True)
-    #Copy files to .logs
+    #move files to .logs
     try:
-        shutil.copy(f"/home/{user}/logs.txt",f"/home/{user}/.logs/")
+        shutil.move(f"/home/{user}/logs.txt",f"/home/{user}/.logs/")
     except FileNotFoundError:
         print("No previous Logs were found!")
+
     shutil.copy(os.path.join(package_dir, "run-log.sh"),f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "loger.py"), f"/home/{user}/.logs")
     shutil.copy(os.path.join(package_dir, "creatreport.py"), f"/home/{user}/.logs")
