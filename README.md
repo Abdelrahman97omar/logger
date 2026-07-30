@@ -4,8 +4,9 @@ Run the following in the same order:</br>
 2. pip install --upgrade --force-reinstall --no-cache-dir git+https://github.com/Abdelrahman97omar/logger.git
 3. ~/.local/bin/logger-install
 4. The logger.py, creatreport.py and install_service.py (package installer) will be installed into /home/USER/.local/lib/python3.10/site-packages/logger_system  
-4. The logs file (logs.txt) and the report pdf (latest-stats.pdf) will be in /home/USER/.logs
-# Old way to install logger
+5. The logs file (logs.txt) and the report pdf (latest-stats.pdf) will be in /home/USER/.logs
+6. In in line 7 in logger.py file, choose which country will the robot be operating in order to choose the time zone
+# Old way to install logger(Don't Use, just for reference)
 1. Send **"logger.zip"** and **"installScript.sh"** to robot's home  
 2. Extract logger.zip
 3. open terminal and run the following two comands: </br>
