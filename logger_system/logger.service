@@ -7,6 +7,6 @@ Type=simple
 User=__USER__
 Environment="ROBOT_ID"=__ROBOTID__
 WorkingDirectory=/home/__USER__/.logs
-ExecStart=/home/__USER__/.local/lib/python3.10/site-packages/logger_system
+ExecStart=/home/__USER__/.local/lib/python3.10/site-packages/logger_system/run-log.sh
 [Install]
 WantedBy=multi-user.target
