@@ -51,14 +51,17 @@ def install_service(user):
     except FileNotFoundError:
         print("No logs.txt file to copy. Continue..")
     try:
+        shutil.copy(f"/home/{user}/.logs/latest-stats.pdf",f"/home/{user}/temp_logs") 
+    except FileNotFoundError:
+        print("No latest-stats.pdf file to copy. Continue..")
+    try:
         shutil.copy(f"/home/{user}/.logs/last_sent.txt",f"/home/{user}/temp_logs") 
     except FileNotFoundError:
         print("No last_sent.txt file to copy. Continue..")
     try:
         shutil.copytree(f"/home/{user}/.logs/old_logs",f"/home/{user}/temp_logs/old_logs")
     except Exception as e:
-        # print("No old_logs folder was found")
-        print(e)
+        print("No old_logs folder was found")
 
     if os.path.exists(old_logs_dir):
         shutil.rmtree(old_logs_dir)  
@@ -70,14 +73,18 @@ def install_service(user):
     except FileNotFoundError:
         print("No previous Logs were found!")
     try:
+        shutil.move(f"/home/{user}/temp_logs/latest-stats.pdf",f"/home/{user}/.logs/")
+    except FileNotFoundError:
+        print("No previous Logs were found!")
+    try:
         shutil.move(f"/home/{user}/temp_logs/last_sent.txt",f"/home/{user}/.logs/")
     except:
         pass
     try:
         shutil.copytree(f"/home/{user}/temp_logs/old_logs",f"/home/{user}/.logs/old_logs")
     except:
-        print("No old_logs folder was found")
-        
+        os.makedirs(f"/home/{user}/.logs/old_logs", exist_ok=True)
+        print("Creating old_logs folder")        
     
     if os.path.exists(f"/home/{user}/temp_logs"): #remove temo folder
         shutil.rmtree(f"/home/{user}/temp_logs")  
@@ -101,6 +108,7 @@ def install_service(user):
 
 def main():
     user = os.getenv("SUDO_USER") or os.getenv("USER")
+    print("USER is",user)
     install_service(user)
     install_mail_cron(user)
     print("robot-logger package installed successfully")
