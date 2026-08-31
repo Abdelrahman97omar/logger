@@ -7,7 +7,7 @@ from pathlib import Path
 def install_mail_cron(user):
     print("Stating mail service installations..")
     cron_job = (
-        f"0 * * * * "
+        f"0 17 * * * "  #Once every day at 5 pm
         f"/home/{user}/.local/bin/send-monthly-mail "
         f">> /home/{user}/.logs/mail-cron.log 2>&1"
     )
