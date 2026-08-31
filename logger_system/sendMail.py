@@ -13,7 +13,7 @@ load_dotenv("/home/abdelrahman/zoho-mail/.env")
 CLIENT_ID = "1000.GE627XEHE9ME97OVER7S1YOIC1CRUE"
 ACCOUNT_ID = "8804211000000008002"
 FROM_ADDRESS = "abdelrahman.omar@marses.systems"
-TO_ADDRESS =   "abdelrahman.hazem@marses.systems"
+TO_ADDRESS =   "abdalrahman.hazem@marses.systems"
 #================= Sectrets ======================
 # CLIENT_SECRET = os.environ["ZOHO_CLIENT_SECRET"] #e46b30965f29b765445e9ba99262ee1446f6fe5453
 # REFRESH_TOKEN = os.environ["ZOHO_REFRESH_TOKEN"] #1000.45e1fdbaca4569847c3cfef5e0e510f7.4745f1160d675286e1218ded32a07504
@@ -184,9 +184,9 @@ def send_email(access_token, attachment):
 # ============================================================
 
 def main():
-    if already_sent_this_month():
-        print("Already sent this month.")
-        return
+    # if already_sent_this_month():
+    #     print("Already sent this month.")
+    #     return
     try:
         access_token = get_access_token()
         attachment = upload_attachment(access_token)
