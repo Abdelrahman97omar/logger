@@ -4,9 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-User=abdelrahman
-Environment="ROBOT_ID="
-WorkingDirectory=/home/abdelrahman/.logs
+User=__USER__
+Environment="ROBOT_ID"=__ROBOTID__
+WorkingDirectory=/home/__USER__/.logs
 ExecStart=/bin/bash -c '"$(python3 -m site --user-site)/logger_system/run-log.sh"'
 [Install]
 WantedBy=multi-user.target
+
+
+

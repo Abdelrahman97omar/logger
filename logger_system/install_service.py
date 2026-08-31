@@ -75,7 +75,7 @@ def install_service(user):
     try:
         shutil.move(f"/home/{user}/temp_logs/latest-stats.pdf",f"/home/{user}/.logs/")
     except FileNotFoundError:
-        print("No previous Logs were found!")
+        pass
     try:
         shutil.move(f"/home/{user}/temp_logs/last_sent.txt",f"/home/{user}/.logs/")
     except:
