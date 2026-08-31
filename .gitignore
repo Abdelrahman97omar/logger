@@ -1,2 +1,4 @@
 latest-stats.pdf
 logs.txt
+/__pycache__
+*.pyc

@@ -4,35 +4,84 @@ import os
 import sys
 from pathlib import Path
 
-def install_service():
+def install_mail_cron(user):
+    print("Stating mail service installations..")
+    cron_job = (
+        f"0 * * * * "
+        f"/home/{user}/.local/bin/send-monthly-mail "
+        f">> /home/{user}/.logs/mail-cron.log 2>&1"
+    )
+
+    result = subprocess.run(
+        ["sudo", "-u", user, "crontab", "-l"],
+        capture_output=True,
+        text=True
+    )
+
+    existing = result.stdout if result.returncode == 0 else ""
+
+    if cron_job in existing:
+        print("Mail cron already installed.")
+        return
+
+    new_crontab = existing.rstrip() + "\n" + cron_job + "\n"
+
+    subprocess.run(
+        ["sudo", "-u", user, "crontab", "-"],
+        input=new_crontab,
+        text=True,
+        check=True
+    )
+
+    print("Mail cron installed.")
+
+def install_service(user):
 
     import logger_system
     package_dir = os.path.dirname(logger_system.__file__)
-    # If the script runs with sudo USER = root and SUDO_USER = duet. If run with no sudo, SUDO_USER = none and USER = duet
-    user = os.getenv("SUDO_USER") or os.getenv("USER")
-    robot_id = os.environ["ROBOT_ID"]
-
-    # Remove old logs file
-    try:
-        print("Copying old logs to safe place")
-        shutil.copy(f"/home/{user}/.logs/logs.txt",f"/home/{user}/") #Copy old logs file to home
-    except:
-        print("Could'nt copy old logs")
+    robot_id = os.environ["ROBOT_ID"] # If the script runs with sudo, USER = root and SUDO_USER = duet.
+                                      # If run with no sudo, SUDO_USER = none and USER = duet
+    
+    #============== Delete old logs folder =====================
     old_logs_dir = f"/home/{user}/.logs"
+    os.makedirs(f"/home/{user}/temp_logs", exist_ok=True)
+
+    try:
+        shutil.copy(f"/home/{user}/.logs/logs.txt",f"/home/{user}/temp_logs") 
+    except FileNotFoundError:
+        print("No logs.txt file to copy. Continue..")
+    try:
+        shutil.copy(f"/home/{user}/.logs/last_sent.txt",f"/home/{user}/temp_logs") 
+    except FileNotFoundError:
+        print("No last_sent.txt file to copy. Continue..")
+    try:
+        shutil.copytree(f"/home/{user}/.logs/old_logs",f"/home/{user}/temp_logs/old_logs")
+    except Exception as e:
+        # print("No old_logs folder was found")
+        print(e)
+
     if os.path.exists(old_logs_dir):
         shutil.rmtree(old_logs_dir)  
 
     os.makedirs(f"/home/{user}/.logs", exist_ok=True)
-    #move files to .logs
+    # move files to .logs
     try:
-        shutil.move(f"/home/{user}/logs.txt",f"/home/{user}/.logs/")
+        shutil.move(f"/home/{user}/temp_logs/logs.txt",f"/home/{user}/.logs/")
     except FileNotFoundError:
         print("No previous Logs were found!")
-
-    shutil.copy(os.path.join(package_dir, "run-log.sh"),f"/home/{user}/.logs")
-    shutil.copy(os.path.join(package_dir, "loger.py"), f"/home/{user}/.logs")
-    shutil.copy(os.path.join(package_dir, "creatreport.py"), f"/home/{user}/.logs")
-    os.chmod(f"/home/{user}/.logs", 0o777)
+    try:
+        shutil.move(f"/home/{user}/temp_logs/last_sent.txt",f"/home/{user}/.logs/")
+    except:
+        pass
+    try:
+        shutil.copytree(f"/home/{user}/temp_logs/old_logs",f"/home/{user}/.logs/old_logs")
+    except:
+        print("No old_logs folder was found")
+        
+    
+    if os.path.exists(f"/home/{user}/temp_logs"): #remove temo folder
+        shutil.rmtree(f"/home/{user}/temp_logs")  
+    #============================================================
 
     #install Service
     subprocess.run(["sudo","systemctl", "stop", "logger"])
@@ -50,5 +99,12 @@ def install_service():
     subprocess.run(["sudo", "systemctl", "enable", "logger"])      
     subprocess.run(["sudo", "systemctl", "start", "logger"])       
 
+def main():
+    user = os.getenv("SUDO_USER") or os.getenv("USER")
+    install_service(user)
+    install_mail_cron(user)
+    print("robot-logger package installed successfully")
+
+
 if __name__ == "__main__":
-    install_service()
+    main()
