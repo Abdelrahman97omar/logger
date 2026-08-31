@@ -184,9 +184,9 @@ def send_email(access_token, attachment):
 # ============================================================
 
 def main():
-    # if already_sent_this_month():
-    #     print("Already sent this month.")
-    #     return
+    if already_sent_this_month():
+        print("Already sent this month.")
+        return
     try:
         access_token = get_access_token()
         attachment = upload_attachment(access_token)
