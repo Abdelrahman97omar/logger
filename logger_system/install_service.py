@@ -82,9 +82,11 @@ def install_service(user):
         pass
     try:
         shutil.copytree(f"/home/{user}/temp_logs/old_logs",f"/home/{user}/.logs/old_logs")
-    except:
+    except Exception as e:
         os.makedirs(f"/home/{user}/.logs/old_logs", exist_ok=True)
-        print("Creating old_logs folder")        
+        print("Creating old_logs folder")
+        print(f"ERROR copying old_logs: {e}")
+        raise        
     
     if os.path.exists(f"/home/{user}/temp_logs"): #remove temo folder
         shutil.rmtree(f"/home/{user}/temp_logs")  
