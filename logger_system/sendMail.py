@@ -1,13 +1,11 @@
 import os
 import requests
 import shutil
-from dotenv import load_dotenv
 from pathlib import Path
 from datetime import datetime
 
 
 
-load_dotenv("/home/abdelrahman/zoho-mail/.env")
 
 
 CLIENT_ID = "1000.GE627XEHE9ME97OVER7S1YOIC1CRUE"
