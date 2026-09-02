@@ -7,6 +7,8 @@ pdf.add_page()
 year, month, day,time=loger.get_time()
 pdf.set_font("Arial", size=12,style='B') # B -> bold
 
+file_name = os.path.expanduser('~/.logs/logs.txt')
+
 robotname = os.environ.get('USER') 
 robotid = os.environ.get('ROBOT_ID','Unknown')
 
@@ -18,7 +20,7 @@ pdf.cell(40, 10, txt="Date",border=1, ln=False, align="C")
 pdf.cell(70, 10, txt="Start Time", border=1,ln=False, align="C")
 pdf.cell(70, 10, txt="Last seen", border=1,ln=True, align="C")
 
-with open('logs.txt','r',encoding='utf-8') as f:
+with open(file_name,'r',encoding='utf-8') as f:
     lines = f.readlines()
 
 pdf.set_font("Arial", size=12,style='')

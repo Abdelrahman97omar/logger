@@ -1,5 +1,8 @@
 #!/bin/bash
-SITE_PACKAGES=$(ls -d /home/${USER}/.local/lib/python3.*/site-packages 2>/dev/null | head -n 1)
-python3 "${SITE_PACKAGES}/logger_system/creatreport.py"
+PYTHON=$(command -v python3)
+LOGGER_DIR=$("$PYTHON" -c 'import logger_system, os; print(os.path.dirname(logger_system.__file__))')
+
+"$PYTHON" "${LOGGER_DIR}/creatreport.py"
 sleep 30
-python3 "${SITE_PACKAGES}/logger_system/loger.py"
+"$PYTHON" "${LOGGER_DIR}/loger.py"
+
