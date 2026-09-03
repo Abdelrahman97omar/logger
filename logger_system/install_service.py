@@ -124,7 +124,7 @@ def main():
     user = os.getenv("SUDO_USER") or os.getenv("USER")
     install_service(user)
     install_mail_cron(user)
-    add_credentials(user)
+    add_credentials()
     print("robot-logger package installed successfully")
 
 
