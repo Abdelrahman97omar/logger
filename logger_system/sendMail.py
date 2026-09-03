@@ -6,14 +6,26 @@ from datetime import datetime
 
 
 
-USER=os.getenv("USER","Unknow")
-ROBOT_ID=os.getenv("ROBOT_ID","UNKNOWN")
-credentials_folder=Path("~/.config/logger_credentials").expanduser()
-credentials_file=credentials_folder / "credentials.txt"
 ROBOT_HOME = Path.home()
 LOGS_DIR = ROBOT_HOME / ".logs"
 PDF_PATH = LOGS_DIR / "latest-stats.pdf"
 STATE_FILE = LOGS_DIR / "last_sent.txt"
+
+# ========== Get robot info =============
+robot_info_file=ROBOT_HOME / ".bash_profile"
+robot_info=robot_info_file.read_text().split("\n")
+robot_name=robot_info[0].split("=")[1]
+robot_id=robot_info[1].split("=")[1]
+
+USER = os.getenv("USER") or ROBOT_HOME.name
+ROBOT_ID = os.getenv("ROBOT_ID") or robot_id or "UNKNOWN"
+#========================================
+
+
+
+credentials_folder=Path("~/.config/logger_credentials").expanduser()
+credentials_file=credentials_folder / "credentials.txt"
+
 
 
 CLIENT_ID = "1000.GE627XEHE9ME97OVER7S1YOIC1CRUE"
