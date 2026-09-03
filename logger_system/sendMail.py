@@ -6,6 +6,14 @@ from datetime import datetime
 
 
 
+USER=os.getenv("USER","Unknow")
+ROBOT_ID=os.getenv("ROBOT_ID","UNKNOWN")
+credentials_folder=Path("~/.config/logger_credentials").expanduser()
+credentials_file=credentials_folder / "credentials.txt"
+ROBOT_HOME = Path.home()
+LOGS_DIR = ROBOT_HOME / ".logs"
+PDF_PATH = LOGS_DIR / "latest-stats.pdf"
+STATE_FILE = LOGS_DIR / "last_sent.txt"
 
 
 CLIENT_ID = "1000.GE627XEHE9ME97OVER7S1YOIC1CRUE"
@@ -13,17 +21,11 @@ ACCOUNT_ID = "8804211000000008002"
 FROM_ADDRESS = "abdelrahman.omar@marses.systems"
 TO_ADDRESS =   "abdalrahman.hazem@marses.systems"
 #================= Sectrets ======================
-# CLIENT_SECRET = os.environ["ZOHO_CLIENT_SECRET"] #e46b30965f29b765445e9ba99262ee1446f6fe5453
-# REFRESH_TOKEN = os.environ["ZOHO_REFRESH_TOKEN"] #1000.45e1fdbaca4569847c3cfef5e0e510f7.4745f1160d675286e1218ded32a07504
-CLIENT_SECRET = "e46b30965f29b765445e9ba99262ee1446f6fe5453"
-REFRESH_TOKEN = "1000.45e1fdbaca4569847c3cfef5e0e510f7.4745f1160d675286e1218ded32a07504"
+file_content = credentials_file.read_text().split("\n")
+CLIENT_SECRET=file_content[0].split(" ")[1]
+REFRESH_TOKEN=file_content[1].split(" ")[1]
 #=================================================
 
-ROBOT_HOME = Path.home()
-LOGS_DIR = ROBOT_HOME / ".logs"
-
-PDF_PATH = LOGS_DIR / "latest-stats.pdf"
-STATE_FILE = LOGS_DIR / "last_sent.txt"
 
 if not STATE_FILE.exists():
     STATE_FILE.write_text("")
@@ -147,7 +149,7 @@ def send_email(access_token, attachment):
 
         "content": (
             "Hello,\n\n"
-            "Please find attached the monthly report.\n\n"
+            f"The monthly report for {USER}_{ROBOT_ID} is ready. Please find the report attached."
             "Regards"
         ),
 

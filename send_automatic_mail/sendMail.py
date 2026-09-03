@@ -1,7 +1,19 @@
 
 import requests
+import os
+from  pathlib import Path
 
 url = "https://mail.zoho.com/api/accounts/8804211000000008002/messages"
+
+user=os.getenv("USER","Unknow")
+robot_id=os.getenv("ROBOT_ID","UNKNOWN")
+
+
+credentials_folder=Path("~/.config/logger_credentials").expanduser()
+credentials_file=credentials_folder / "credentials.txt"
+file_content = credentials_file.read_text().split("\n")
+CLIENT_SECRET=file_content[0].split(" ")[1]
+REFRESH_TOKEN=file_content[1].split(" ")[1]
 
 headers = {
     "Accept": "application/json",
@@ -15,7 +27,7 @@ data = {
     # "ccAddress": "colleagues@mywork.com",
     # "bccAddress": "restadmin1@restapi.com",
     "subject": "test",
-    "content": "Email can never be dead. The most neutral and effective way, that can be used for one to many and two way communication.",
+    "content": f"The monthly report for {user}_{robot_id} is ready. Please find the report attached.",
 "attachments": [
     {
         "storeName": "856804851",

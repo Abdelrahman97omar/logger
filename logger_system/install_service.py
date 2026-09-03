@@ -108,11 +108,23 @@ def install_service(user):
     subprocess.run(["sudo", "systemctl", "enable", "logger"])      
     subprocess.run(["sudo", "systemctl", "start", "logger"])       
 
+def add_credentials():
+    credentials_folder=Path("~/.config/logger_credentials").expanduser()
+    credentials_folder.mkdir(parents=True, exist_ok=True)
+
+    credentials_file=credentials_folder / "credentials.txt"
+    CLIENT_SECRET = input("Please enter the client secret: ")
+    REFRESH_TOKEN = input("Please enter the refresh token: ")
+
+    with open(credentials_file, "w") as f:
+        f.write(f"CLIENT_SECRET {CLIENT_SECRET} \n")
+        f.write(f"REFRESH_TOKEN {REFRESH_TOKEN} \n")
+
 def main():
     user = os.getenv("SUDO_USER") or os.getenv("USER")
-    print("USER is",user)
     install_service(user)
     install_mail_cron(user)
+    add_credentials(user)
     print("robot-logger package installed successfully")
 
 
