@@ -184,10 +184,9 @@ def send_email(access_token, attachment):
     if result.get("status", {}).get("code") == 200:
         old_logs_dir = LOGS_DIR / "old_logs"
         old_logs_dir.mkdir(exist_ok=True)
-
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    shutil.move(LOGS_DIR / "logs.txt",old_logs_dir / f"logs_{timestamp}.txt")
-    shutil.move(LOGS_DIR / "latest-stats.pdf",old_logs_dir / f"latest-stats_{timestamp}.pdf")
+        shutil.move(LOGS_DIR / "logs.txt",old_logs_dir / f"logs_{timestamp}.txt")
+        shutil.move(LOGS_DIR / "latest-stats.pdf",old_logs_dir / f"latest-stats_{timestamp}.pdf")
     return response.json()
 
 

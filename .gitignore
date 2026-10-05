@@ -4,3 +4,4 @@ logs.txt
 *.pyc
 /build
 robot_logger.egg-info/
+SECRETS.txt
