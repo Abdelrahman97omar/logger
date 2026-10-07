@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "robot-logger"
 version = "2.0.0"
 description = "Robot working hours logger. Zoho mail api with cron service to send direct mail to whom may concern"
-dependencies = ["pytz", "fpdf2"]
+dependencies = ["pytz", "fpdf2", "requests"]
 
 [project.scripts]
 logger-install = "logger_system.install_service:main"
